@@ -1,0 +1,34 @@
+plugins {
+    id 'java-gradle-plugin'
+}
+
+group = 'fr.laboiteadodo.gradle'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    maven {
+        url = uri('https://repo.jenkins-ci.org/public/')
+    }
+}
+
+dependencies {
+    implementation 'com.google.guava:guava:33.2.1-jre'
+    implementation 'org.apache.tomee:tomee-embedded:9.1.3'
+
+    testImplementation platform('org.junit:junit-bom:5.10.3')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+gradlePlugin {
+    plugins {
+        tomeeEmbedded {
+            id = 'fr.laboiteadodo.gradle.tomee-embedded-gradle-plugin'
+            implementationClass = 'fr.laboiteadodo.gradle.TomeeEmbeddedPlugin'
+        }
+    }
+}
